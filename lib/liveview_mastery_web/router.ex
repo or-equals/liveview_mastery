@@ -18,6 +18,9 @@ defmodule LiveviewMasteryWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/puppies", PuppyLive.Index, :index
+    live "/puppies/new", PuppyLive.Index, :new
+    live "/puppies/:id/edit", PuppyLive.Index, :edit
   end
 
   # Other scopes may use custom stacks.

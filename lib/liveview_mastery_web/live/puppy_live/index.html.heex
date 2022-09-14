@@ -1,0 +1,43 @@
+<h1>Listing Puppies</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.puppy_index_path(@socket, :index)}>
+    <.live_component
+      module={LiveviewMasteryWeb.PuppyLive.FormComponent}
+      id={@puppy.id || :new}
+      title={@page_title}
+      action={@live_action}
+      puppy={@puppy}
+      return_to={Routes.puppy_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Breed</th>
+      <th>Photo url</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="puppies">
+    <%= for puppy <- @puppies do %>
+      <tr id={"puppy-#{puppy.id}"}>
+        <td><%= puppy.name %></td>
+        <td><%= puppy.breed %></td>
+        <td><%= puppy.photo_url %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.puppy_show_path(@socket, :show, puppy) %></span>
+          <span><%= live_patch "Edit", to: Routes.puppy_index_path(@socket, :edit, puppy) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: puppy.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Puppy", to: Routes.puppy_index_path(@socket, :new) %></span>
