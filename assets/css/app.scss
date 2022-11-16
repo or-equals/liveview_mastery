@@ -136,3 +136,20 @@
   100% { opacity: 0; }
 }
 
+.button-green{
+  @apply text-white text-sm font-medium bg-opacity-100 cursor-pointer rounded-md px-4 py-2 inline-flex justify-center w-full items-center border-transparent border;
+  background-color: rgba(16, 185, 129, 1);
+}
+
+.button-green:hover{
+  @apply bg-opacity-100 ease-in-out delay-75;
+  background-color: rgba(5, 150, 105, 1);
+}
+
+.button-green:focus{
+  @apply outline-none border-green-700 ring-green-700;
+}
+
+.button-green.disabled{
+  @apply opacity-50 cursor-not-allowed;
+}
