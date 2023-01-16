@@ -40,6 +40,13 @@ defmodule LiveviewMasteryWeb.PuppyLive.Index do
     {:noreply, assign(socket, :puppies, list_puppies())}
   end
 
+  def handle_event("toggle-cuteness", %{"id" => id}, socket) do
+    puppy = Puppies.get_puppy!(id)
+    {:ok, _} = Puppies.update_puppy(puppy, %{cuteness: !puppy.cuteness})
+
+    {:noreply, assign(socket, :puppies, list_puppies())}
+  end
+
   defp list_puppies do
     Puppies.list_puppies()
   end

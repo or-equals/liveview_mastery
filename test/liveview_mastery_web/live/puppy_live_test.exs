@@ -67,6 +67,16 @@ defmodule LiveviewMasteryWeb.PuppyLiveTest do
       assert html =~ "some updated breed"
     end
 
+    test "makes puppy cute/not cute", %{conn: conn, puppy: puppy} do
+      {:ok, index_live, _html} = live(conn, Routes.puppy_index_path(conn, :index))
+
+      assert has_element?(index_live, "#puppy-cuteness-toggle-#{puppy.id}.bg-green-500")
+      assert index_live |> element("#puppy-cuteness-toggle-#{puppy.id}") |> render_click()
+      assert has_element?(index_live, "#puppy-cuteness-toggle-#{puppy.id}.bg-gray-200")
+      assert index_live |> element("#puppy-cuteness-toggle-#{puppy.id}") |> render_click()
+      assert has_element?(index_live, "#puppy-cuteness-toggle-#{puppy.id}.bg-green-500")
+    end
+
     test "deletes puppy in listing", %{conn: conn, puppy: puppy} do
       {:ok, index_live, _html} = live(conn, Routes.puppy_index_path(conn, :index))
 
