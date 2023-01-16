@@ -28,6 +28,8 @@ defmodule LiveviewMasteryWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint LiveviewMasteryWeb.Endpoint
+
+      use LiveviewMasteryWeb, :verified_routes
     end
   end
 
