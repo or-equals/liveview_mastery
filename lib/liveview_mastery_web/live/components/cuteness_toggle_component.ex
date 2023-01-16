@@ -1,19 +1,19 @@
 defmodule LiveviewMasteryWeb.CutenessToggleComponent do
   use Phoenix.Component
 
-  def render(%{puppy: %{id: id, cuteness: cuteness}} = assigns) do
+  def render(assigns) do
     ~H"""
     <span
       phx-click="toggle-cuteness"
-      phx-value-id={id}
-      id={"puppy-cuteness-toggle-#{id}"}
-      class={"#{toggle_color(cuteness)} relative inline-block flex-shrink-0 h-5 w-9 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring focus:ring-gray-200"}
+      phx-value-id={@puppy.id}
+      id={"puppy-cuteness-toggle-#{@puppy.id}"}
+      class={"#{toggle_color(@puppy.cuteness)} relative inline-block flex-shrink-0 h-5 w-9 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring focus:ring-gray-200"}
       role="checkbox"
       tabindex="0"
     >
       <span
         aria-hidden="true"
-        class={"#{toggle_position(cuteness)} inline-block h-4 w-4 rounded-full bg-white shadow transform transition ease-in-out duration-200"}
+        class={"#{toggle_position(@puppy.cuteness)} inline-block h-4 w-4 rounded-full bg-white shadow transform transition ease-in-out duration-200"}
       >
       </span>
     </span>
