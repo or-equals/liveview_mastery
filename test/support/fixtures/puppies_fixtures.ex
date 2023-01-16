@@ -13,7 +13,8 @@ defmodule LiveviewMastery.PuppiesFixtures do
       |> Enum.into(%{
         breed: "some breed",
         color: "some color",
-        name: "some name"
+        name: "some name",
+        cuteness: true
       })
       |> LiveviewMastery.Puppies.create_puppy()
 
