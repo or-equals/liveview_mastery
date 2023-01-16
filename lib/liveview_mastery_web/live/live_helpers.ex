@@ -1,5 +1,5 @@
 defmodule LiveviewMasteryWeb.LiveHelpers do
-  import Phoenix.LiveView
+  import Phoenix.Component
   import Phoenix.LiveView.Helpers
 
   alias Phoenix.LiveView.JS
