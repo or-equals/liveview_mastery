@@ -33,4 +33,4 @@ config :wallaby,
   otp_app: :local_fare_jax,
   screenshot_on_failure: true,
   driver: Wallaby.Chrome,
-  chromedriver: [headless: false]
+  chromedriver: [headless: true]
