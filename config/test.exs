@@ -33,4 +33,5 @@ config :wallaby,
   otp_app: :local_fare_jax,
   screenshot_on_failure: true,
   driver: Wallaby.Chrome,
+  hackney_options: [timeout: 5_000],
   chromedriver: [headless: true]
