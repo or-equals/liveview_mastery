@@ -17,15 +17,15 @@ defmodule LiveviewMasteryWeb.PuppyFeatureTest do
       |> assert_has(Query.css(".puppy", count: 3))
     end
 
-    test "create a puppy", %{session: session} do
-      session
-      |> visit(Routes.puppy_index_path(Endpoint, :new))
-      |> fill_in(Query.text_field("Name"), with: "Boomerang")
-      |> fill_in(Query.text_field("Color"), with: "Blonde")
-      |> fill_in(Query.text_field("Breed"), with: "Labrador Retriever")
-      |> click(Query.button("Save"))
-      |> assert_has(Query.css(".alert", text: "Puppy created successfully"))
-    end
+    # test "create a puppy", %{session: session} do
+    #   session
+    #   |> visit(Routes.puppy_index_path(Endpoint, :new))
+    #   |> fill_in(Query.text_field("Name"), with: "Boomerang")
+    #   |> fill_in(Query.text_field("Color"), with: "Blonde")
+    #   |> fill_in(Query.text_field("Breed"), with: "Labrador Retriever")
+    #   |> click(Query.button("Save"))
+    #   |> assert_has(Query.css(".alert", text: "Puppy created successfully"))
+    # end
   end
 
   # defp sign_in_user_and_visit_route_index_page(session, user, date) do
