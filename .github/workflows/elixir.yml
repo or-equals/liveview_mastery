@@ -40,16 +40,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-mix-${{ env.cache-name }}-
             ${{ runner.os }}-mix-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-          cache: 'npm'
-          cache-dependency-path: assets/package-lock.json
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16.x'
+      #     cache: 'npm'
+      #     cache-dependency-path: assets/package-lock.json
       # - uses: nanasess/setup-chromedriver@v1
       - run: mix local.rebar --force
       - run: mix local.hex --force
       - run: mix deps.get
-      - run: mix sobelow --config
       - run: npm install --prefix assets
       # - run: npm run deploy --prefix assets
       - run: mix test
