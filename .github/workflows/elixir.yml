@@ -45,7 +45,7 @@ jobs:
       #     node-version: '16.x'
       #     cache: 'npm'
       #     cache-dependency-path: assets/package-lock.json
-      # - uses: nanasess/setup-chromedriver@v1
+      - uses: nanasess/setup-chromedriver@v1
       - run: mix local.rebar --force
       - run: mix local.hex --force
       - run: mix deps.get
