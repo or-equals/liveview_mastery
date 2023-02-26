@@ -11,6 +11,8 @@
   </.modal>
 <% end %>
 
+<%= img_tag(Routes.static_path(@socket, "/images/puppy_logo.webp"), class: "max-h-16", title: "Puppy Logo") %>
+
 <div class="flex-1 min-w-0">
   <div class="pl-4 pr-6 pt-2 pb-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
     <div class="flex-column lg:flex items-center">
@@ -56,6 +58,7 @@
             <div class="ml-4">
               <div class="text-sm leading-5 font-medium text-gray-900">
                 <%= puppy.name %>
+                <div class="with-puppy-logo bg-cover w-24 h-24"></div>
               </div>
             </div>
           </div>
