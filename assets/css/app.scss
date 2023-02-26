@@ -153,3 +153,7 @@
 .button-green.disabled{
   @apply opacity-50 cursor-not-allowed;
 }
+
+.with-puppy-logo{
+  background-image: url("/images/little_puppy.jpg");
+}
