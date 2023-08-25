@@ -68,7 +68,8 @@ config :dart_sass,
 config :liveview_mastery,
   access_key_id: "fake",
   secret_access_key: "fake",
-  bucket: "fake"
+  bucket: "fake",
+  region: "us-east-1"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
