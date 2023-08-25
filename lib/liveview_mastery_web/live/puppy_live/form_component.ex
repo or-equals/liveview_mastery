@@ -77,13 +77,11 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   end
 
   defp put_photo_urls(socket, puppy) do
-    {completed, []} = uploaded_entries(socket, :photo)
-    urls =
-      for entry <- completed do
-        SimpleS3Upload.entry_url(entry)
-      end
+    uploaded_file_urls = consume_uploaded_entries(socket, :photo, fn _, entry ->
+      {:ok, SimpleS3Upload.entry_url(entry)}
+    end)
 
-    %{puppy | "photo_url" => add_photo_url_to_params(List.first(urls), puppy["photo_url"])}
+    %{puppy | "photo_url" => add_photo_url_to_params(List.first(uploaded_file_urls), puppy["photo_url"])}
   end
 
   defp add_photo_url_to_params(s3_url, photo_url) when is_nil(s3_url), do: photo_url

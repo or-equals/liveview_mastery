@@ -72,7 +72,7 @@ defmodule LiveviewMastery.Uploads.SimpleS3Upload do
 
   defp config do
     %{
-      region: "us-east-1",
+      region: region(),
       access_key_id: Application.fetch_env!(:liveview_mastery, :access_key_id),
       secret_access_key: Application.fetch_env!(:liveview_mastery, :secret_access_key)
     }
@@ -80,6 +80,10 @@ defmodule LiveviewMastery.Uploads.SimpleS3Upload do
 
   def bucket do
     Application.fetch_env!(:liveview_mastery, :bucket)
+  end
+
+  def region do
+    Application.fetch_env!(:liveview_mastery, :region)
   end
 
   def s3_filepath(entry) do

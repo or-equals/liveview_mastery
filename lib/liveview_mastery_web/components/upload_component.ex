@@ -6,7 +6,7 @@ defmodule LiveviewMasteryWeb.UploadComponent do
     <div>
       <%= hidden_input @form, :photo_url %>
       <%= error_tag @form, :photo_url %>
-      <div class="col-span-4 sm:col-span-2">
+      <div class="col-span-4 sm:col-span-2" phx-drop-target={@uploads.photo.ref}>
         <div class="mt-2 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
           <div class="space-y-1 text-center">
             <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
