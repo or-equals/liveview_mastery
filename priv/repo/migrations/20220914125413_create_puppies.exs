@@ -5,6 +5,7 @@ defmodule LiveviewMastery.Repo.Migrations.CreatePuppies do
     create table(:puppies) do
       add :name, :string
       add :breed, :string
+      add :color, :string
       add :photo_url, :string
 
       timestamps()

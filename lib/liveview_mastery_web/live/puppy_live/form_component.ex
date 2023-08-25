@@ -2,16 +2,17 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   use LiveviewMasteryWeb, :live_component
 
   alias LiveviewMastery.Puppies
+  alias LiveviewMastery.Uploads.SimpleS3Upload
 
   @impl true
   def update(%{puppy: puppy} = assigns, socket) do
     changeset = Puppies.change_puppy(puppy)
-    
-    socket 
-    |> allow_upload(:photo, accept: ~w(.png .jpeg .jpg), max_entries: 1, auto_upload: true, external: &presign_entry/2)
-    |> assign(assigns)
-    |> assign(:changeset, changeset)}
-    |> ok()
+
+    {:ok,
+     socket
+     |> allow_upload(:photo, accept: ~w(.png .jpeg .jpg .webp), max_entries: 1, auto_upload: true, external: &presign_entry/2)
+     |> assign(assigns)
+     |> assign(:changeset, changeset)}
   end
 
   defp presign_entry(entry, %{assigns: %{uploads: uploads}} = socket) do
@@ -84,4 +85,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
 
     %{puppy | "photo_url" => add_photo_url_to_params(List.first(urls), puppy["photo_url"])}
   end
+
+  defp add_photo_url_to_params(s3_url, photo_url) when is_nil(s3_url), do: photo_url
+  defp add_photo_url_to_params(s3_url, _photo_url), do: s3_url
 end

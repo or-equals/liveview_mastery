@@ -1,4 +1,4 @@
-defmodule LocalFareJax.Uploads.SimpleS3Upload do
+defmodule LiveviewMastery.Uploads.SimpleS3Upload do
   @moduledoc """
   Dependency-free S3 Form Upload using HTTP POST sigv4
   https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
@@ -73,13 +73,13 @@ defmodule LocalFareJax.Uploads.SimpleS3Upload do
   defp config do
     %{
       region: "us-east-1",
-      access_key_id: Application.fetch_env!(:ex_aws, :access_key_id),
-      secret_access_key: Application.fetch_env!(:ex_aws, :secret_access_key)
+      access_key_id: Application.fetch_env!(:liveview_mastery, :access_key_id),
+      secret_access_key: Application.fetch_env!(:liveview_mastery, :secret_access_key)
     }
   end
 
   def bucket do
-    Application.fetch_env!(:ex_aws, :bucket)
+    Application.fetch_env!(:liveview_mastery, :bucket)
   end
 
   def s3_filepath(entry) do
