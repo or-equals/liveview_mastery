@@ -10,7 +10,7 @@ defmodule LiveviewMasteryWeb.Endpoint do
     signing_salt: "qU1k2Os2"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [:user_agent, session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -20,7 +20,7 @@ defmodule LiveviewMasteryWeb.Endpoint do
     at: "/",
     from: :liveview_mastery,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: LiveviewMasteryWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

@@ -6,15 +6,12 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   @impl true
   def update(%{puppy: puppy} = assigns, socket) do
     changeset = Puppies.change_puppy(puppy)
-
-
-    socket |> allow_upload(:photo, accept: ~w(.png .jpeg .jpg), max_entries: 1, auto_upload: true, external: &presign_entry/2) |> ok()
-
-
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    
+    socket 
+    |> allow_upload(:photo, accept: ~w(.png .jpeg .jpg), max_entries: 1, auto_upload: true, external: &presign_entry/2)
+    |> assign(assigns)
+    |> assign(:changeset, changeset)}
+    |> ok()
   end
 
   defp presign_entry(entry, %{assigns: %{uploads: uploads}} = socket) do
@@ -37,7 +34,6 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
     {:ok, meta, socket}
   end
 
-
   @impl true
   def handle_event("validate", %{"puppy" => puppy_params}, socket) do
     changeset =
@@ -59,7 +55,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Puppy updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_navigate(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
@@ -72,7 +68,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Puppy created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_navigate(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -88,5 +84,4 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
 
     %{puppy | "photo_url" => add_photo_url_to_params(List.first(urls), puppy["photo_url"])}
   end
-
 end

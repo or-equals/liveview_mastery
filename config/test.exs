@@ -18,7 +18,7 @@ config :liveview_mastery, LiveviewMastery.Repo,
 config :liveview_mastery, LiveviewMasteryWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "vM1IvsH3YCTmCxaz8HDFU6sp2rFmsF4YM2Ra7cReUXWn8ysqWjbZZgbR0p/5U/V0",
-  server: false
+  server: true
 
 # In test we don't send emails.
 config :liveview_mastery, LiveviewMastery.Mailer, adapter: Swoosh.Adapters.Test
@@ -28,3 +28,10 @@ config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :wallaby,
+  otp_app: :local_fare_jax,
+  screenshot_on_failure: true,
+  driver: Wallaby.Chrome,
+  hackney_options: [timeout: 5_000],
+  chromedriver: [headless: true]

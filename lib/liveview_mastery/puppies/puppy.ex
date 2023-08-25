@@ -6,6 +6,9 @@ defmodule LiveviewMastery.Puppies.Puppy do
     field :breed, :string
     field :name, :string
     field :photo_url, :string
+    field :color, :string
+    field :name, :string
+    field :cuteness, :boolean, default: true
 
     timestamps()
   end
@@ -13,7 +16,7 @@ defmodule LiveviewMastery.Puppies.Puppy do
   @doc false
   def changeset(puppy, attrs) do
     puppy
-    |> cast(attrs, [:name, :breed, :photo_url])
-    |> validate_required([:name, :breed, :photo_url])
+    |> cast(attrs, [:name, :color, :breed, :cuteness])
+    |> validate_required([:name, :color, :breed, :cuteness, :photo_url])
   end
 end
