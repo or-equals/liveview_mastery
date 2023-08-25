@@ -8,7 +8,7 @@ defmodule LiveviewMastery.PuppiesTest do
 
     import LiveviewMastery.PuppiesFixtures
 
-    @invalid_attrs %{breed: nil, color: nil, name: nil}
+    @invalid_attrs %{breed: nil, name: nil, photo_url: nil}
 
     test "list_puppies/0 returns all puppies" do
       puppy = puppy_fixture()
@@ -21,12 +21,13 @@ defmodule LiveviewMastery.PuppiesTest do
     end
 
     test "create_puppy/1 with valid data creates a puppy" do
-      valid_attrs = %{breed: "some breed", color: "some color", name: "some name"}
+      valid_attrs = %{breed: "some breed", name: "some name", color: "some color", photo_url: "some photo_url"}
 
       assert {:ok, %Puppy{} = puppy} = Puppies.create_puppy(valid_attrs)
       assert puppy.breed == "some breed"
       assert puppy.color == "some color"
       assert puppy.name == "some name"
+      assert puppy.photo_url == "some photo_url"
     end
 
     test "create_puppy/1 with invalid data returns error changeset" do
@@ -35,12 +36,13 @@ defmodule LiveviewMastery.PuppiesTest do
 
     test "update_puppy/2 with valid data updates the puppy" do
       puppy = puppy_fixture()
-      update_attrs = %{breed: "some updated breed", color: "some updated color", name: "some updated name"}
+      update_attrs = %{breed: "some updated breed", name: "some updated name", photo_url: "some updated photo_url", color: "some updated color"}
 
       assert {:ok, %Puppy{} = puppy} = Puppies.update_puppy(puppy, update_attrs)
       assert puppy.breed == "some updated breed"
-      assert puppy.color == "some updated color"
       assert puppy.name == "some updated name"
+      assert puppy.photo_url == "some updated photo_url"
+      assert puppy.color == "some updated color"
     end
 
     test "update_puppy/2 with invalid data returns error changeset" do

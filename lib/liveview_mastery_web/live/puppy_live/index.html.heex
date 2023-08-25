@@ -1,13 +1,13 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.puppy_index_path(@socket, :index)}>
-  <.live_component
-  module={LiveviewMasteryWeb.PuppyLive.FormComponent}
-  id={@puppy.id || :new}
-  title={@page_title}
-  action={@live_action}
-  puppy={@puppy}
-  return_to={Routes.puppy_index_path(@socket, :index)}
-  />
+    <.live_component
+      module={LiveviewMasteryWeb.PuppyLive.FormComponent}
+      id={@puppy.id || :new}
+      title={@page_title}
+      action={@live_action}
+      puppy={@puppy}
+      return_to={Routes.puppy_index_path(@socket, :index)}
+    />
   </.modal>
 <% end %>
 
@@ -58,7 +58,9 @@
             <div class="ml-4">
               <div class="text-sm leading-5 font-medium text-gray-900">
                 <%= puppy.name %>
-                <div class="with-puppy-logo bg-cover w-24 h-24"></div>
+                <div class="ml-1 w-full aspect-w-1 aspect-h-1 bg-gray-200 overflow-hidden rounded">
+                  <img src={puppy.photo_url} alt={puppy.name} class="w-15 h-15 object-center object-cover">
+                </div>
               </div>
             </div>
           </div>
@@ -106,4 +108,3 @@
     <% end %>
   </tbody>
 </table>
-

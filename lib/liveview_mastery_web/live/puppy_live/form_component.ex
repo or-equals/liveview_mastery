@@ -2,6 +2,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   use LiveviewMasteryWeb, :live_component
 
   alias LiveviewMastery.Puppies
+  alias LiveviewMastery.Uploads.SimpleS3Upload
 
   @impl true
   def update(%{puppy: puppy} = assigns, socket) do
@@ -9,8 +10,29 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
 
     {:ok,
      socket
+     |> allow_upload(:photo, accept: ~w(.png .jpeg .jpg .webp), max_entries: 1, auto_upload: true, external: &presign_entry/2)
      |> assign(assigns)
      |> assign(:changeset, changeset)}
+  end
+
+  defp presign_entry(entry, %{assigns: %{uploads: uploads}} = socket) do
+    s3_filepath = SimpleS3Upload.s3_filepath(entry)
+    {:ok, fields} =
+      SimpleS3Upload.sign_form_upload(
+        key: s3_filepath,
+        content_type: entry.client_type,
+        max_file_size: uploads.photo.max_file_size,
+        expires_in: :timer.hours(1)
+      )
+    meta =
+      %{
+        uploader: "S3",
+        key: s3_filepath,
+        url: "https://#{SimpleS3Upload.bucket()}.s3.amazonaws.com",
+        fields: fields
+      }
+
+    {:ok, meta, socket}
   end
 
   @impl true
@@ -24,6 +46,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   end
 
   def handle_event("save", %{"puppy" => puppy_params}, socket) do
+    puppy_params = put_photo_urls(socket, puppy_params)
     save_puppy(socket, socket.assigns.action, puppy_params)
   end
 
@@ -52,4 +75,15 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
+
+  defp put_photo_urls(socket, puppy) do
+    uploaded_file_urls = consume_uploaded_entries(socket, :photo, fn _, entry ->
+      {:ok, SimpleS3Upload.entry_url(entry)}
+    end)
+
+    %{puppy | "photo_url" => add_photo_url_to_params(List.first(uploaded_file_urls), puppy["photo_url"])}
+  end
+
+  defp add_photo_url_to_params(s3_url, photo_url) when is_nil(s3_url), do: photo_url
+  defp add_photo_url_to_params(s3_url, _photo_url), do: s3_url
 end

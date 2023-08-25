@@ -4,9 +4,9 @@ defmodule LiveviewMasteryWeb.PuppyLiveTest do
   import Phoenix.LiveViewTest
   import LiveviewMastery.PuppiesFixtures
 
-  @create_attrs %{breed: "some breed", color: "some color", name: "some name"}
-  @update_attrs %{breed: "some updated breed", color: "some updated color", name: "some updated name"}
-  @invalid_attrs %{breed: nil, color: nil, name: nil}
+  @create_attrs %{breed: "some breed", name: "some name", color: "some color"}
+  @update_attrs %{breed: "some updated breed", name: "some updated name", color: "some updated color"}
+  @invalid_attrs %{breed: nil, name: nil}
 
   defp create_puppy(_) do
     puppy = puppy_fixture()
@@ -32,8 +32,17 @@ defmodule LiveviewMasteryWeb.PuppyLiveTest do
       assert_patch(index_live, Routes.puppy_index_path(conn, :new))
 
       assert index_live
-             |> form("#puppy-form", puppy: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
+      |> form("#puppy-form", puppy: @invalid_attrs)
+      |> render_change() =~ "can&#39;t be blank"
+
+      photo =
+        file_input(index_live, "#puppy-form", :photo, [%{
+          name: "puppy_logo.webp",
+          content: File.read!(Path.absname("priv/static/images/puppy_logo.webp")),
+          type: "image/webp"
+        }])
+
+      assert render_upload(photo, "puppy_logo.webp") =~ "100%"
 
       {:ok, _, html} =
         index_live
