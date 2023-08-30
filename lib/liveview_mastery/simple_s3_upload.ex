@@ -78,6 +78,25 @@ defmodule LiveviewMastery.Uploads.SimpleS3Upload do
     }
   end
 
+  def meta(entry, uploads) do
+    s3_filepath = s3_filepath(entry)
+
+    {:ok, fields} =
+      sign_form_upload(
+        key: s3_filepath,
+        content_type: entry.client_type,
+        max_file_size: uploads.photo.max_file_size,
+        expires_in: :timer.hours(1)
+      )
+
+    %{
+      uploader: "S3",
+      key: s3_filepath,
+      url: "https://#{bucket()}.s3.#{region()}.amazonaws.com",
+      fields: fields
+    }
+  end
+
   def bucket do
     Application.fetch_env!(:liveview_mastery, :bucket)
   end
@@ -91,7 +110,7 @@ defmodule LiveviewMastery.Uploads.SimpleS3Upload do
   end
 
   def entry_url(entry) do
-    "https://#{bucket()}.s3.amazonaws.com/#{entry.uuid}.#{ext(entry)}"
+    "http://#{bucket()}.s3.#{region()}.amazonaws.com/#{entry.uuid}.#{ext(entry)}"
   end
 
   def presign_entry(entry, socket) do

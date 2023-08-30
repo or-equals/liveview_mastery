@@ -16,23 +16,7 @@ defmodule LiveviewMasteryWeb.PuppyLive.FormComponent do
   end
 
   defp presign_entry(entry, %{assigns: %{uploads: uploads}} = socket) do
-    s3_filepath = SimpleS3Upload.s3_filepath(entry)
-    {:ok, fields} =
-      SimpleS3Upload.sign_form_upload(
-        key: s3_filepath,
-        content_type: entry.client_type,
-        max_file_size: uploads.photo.max_file_size,
-        expires_in: :timer.hours(1)
-      )
-    meta =
-      %{
-        uploader: "S3",
-        key: s3_filepath,
-        url: "https://#{SimpleS3Upload.bucket()}.s3.amazonaws.com",
-        fields: fields
-      }
-
-    {:ok, meta, socket}
+    {:ok, SimpleS3Upload.meta(entry, uploads), socket}
   end
 
   @impl true
