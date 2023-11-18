@@ -21,7 +21,7 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git curl \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -51,7 +51,19 @@ COPY lib lib
 
 COPY assets assets
 
+# Install nvm with node and npm
+ENV NVM_DIR=/root/.nvm
+ENV NODE_VERSION 20.9.0
+
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.39.5/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+
 # compile assets
+RUN mix cmd npm install --prefix assets
 RUN mix assets.deploy
 
 # Compile the release
