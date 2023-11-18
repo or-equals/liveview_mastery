@@ -1,0 +1,1 @@
+ALWAYS use a database that has daily backups enabled. On Digital Ocean, that's the "Production-Ready Database" plan.
