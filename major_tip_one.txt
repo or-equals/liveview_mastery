@@ -1,0 +1,4 @@
+ALWAYS have a "staging" version of your application. A production deployed version of your application so that you can
+perform Quality Assurance.
+
+I always set staging applications to auto-deploy the "main" branch.
