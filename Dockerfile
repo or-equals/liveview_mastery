@@ -88,4 +88,5 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/liveview_mast
 
 USER nobody
 
+CMD ["/app/bin/migrate"]
 CMD ["/app/bin/server"]
